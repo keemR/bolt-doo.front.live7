@@ -1,0 +1,23 @@
+---
+import type { NavigationItem } from '../../types';
+import NavLink from './NavLink.astro';
+
+interface Props {
+  items: NavigationItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="hidden xl:hidden bg-white border-t border-gray-100" id="mobile-menu">
+  <nav class="px-4 py-2 space-y-1">
+    {items.map((item) => (
+      <NavLink
+        href={item.href}
+        class="block px-4 py-3 text-base font-medium text-gray-700 hover:text-emerald-500 hover:bg-gray-50 rounded-lg"
+      >
+        {item.name}
+      </NavLink>
+    ))}
+  </nav>
+</div>

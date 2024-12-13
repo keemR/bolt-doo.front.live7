@@ -1,0 +1,46 @@
+---
+import Logo from './Logo.astro';
+import SearchBar from './SearchBar.astro';
+import SocialIcons from './SocialIcons.astro';
+import DesktopNav from './navigation/DesktopNav.astro';
+import MobileMenu from './navigation/MobileMenu.astro';
+import { mainNavigation } from '../data/navigation';
+---
+
+<header class="bg-white shadow-sm sticky top-0 z-50">
+  <div class="container mx-auto px-4">
+    <div class="flex items-center justify-between h-16">
+      <div class="flex items-center flex-1">
+        <a href="/" class="flex items-center">
+          <Logo />
+        </a>
+        <DesktopNav items={mainNavigation} />
+      </div>
+
+      <div class="flex items-center space-x-6">
+        <SearchBar />
+        <SocialIcons class="hidden md:flex" />
+        <button 
+          class="xl:hidden text-gray-700 hover:text-emerald-500"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+          id="menu-toggle"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <MobileMenu items={mainNavigation} />
+</header>
+
+<script>
+  import { initMobileMenu } from '../utils/navigation';
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    initMobileMenu();
+  });
+</script>

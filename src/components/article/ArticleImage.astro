@@ -1,0 +1,31 @@
+---
+import { getOptimizedImageUrl } from '../../utils/image';
+
+interface Props {
+  src: string;
+  alt: string;
+  class?: string;
+  width?: number;
+  quality?: number;
+}
+
+const { 
+  src, 
+  alt, 
+  class: className = '',
+  width = 800,
+  quality = 80
+} = Astro.props;
+
+const optimizedSrc = getOptimizedImageUrl(src, { width, quality });
+---
+
+<img 
+  src={optimizedSrc} 
+  alt={alt} 
+  class:list={["w-full object-cover", className]}
+  loading="lazy"
+  decoding="async"
+  width={width}
+  height={Math.round(width * 0.5625)} <!-- 16:9 aspect ratio -->
+/>

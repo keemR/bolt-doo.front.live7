@@ -1,0 +1,95 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  type?: string;
+  canonicalUrl?: string;
+}
+
+const { 
+  title, 
+  description = "Expert insights and practical guidance for better living",
+  image = "/default-og-image.jpg",
+  type = "website",
+  canonicalUrl = Astro.url.href
+} = Astro.props;
+
+const siteTitle = import.meta.env.PUBLIC_SITE_TITLE || "Doorillio";
+const fullTitle = `${title} | ${siteTitle}`;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalUrl} />
+    <title>{fullTitle}</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content={siteTitle} />
+    <meta name="keywords" content="health, wellness, nutrition, fitness, mental health" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:site_name" content={siteTitle} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "{siteTitle}",
+        "description": "{description}",
+        "url": "{Astro.url.href}",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "{Astro.url.origin}/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+
+    <!-- Preload critical assets -->
+    <link rel="preload" as="image" href="/logo.svg" />
+  </head>
+  <body class="min-h-screen bg-gray-50 font-sans">
+    <Header />
+    <main class="container mx-auto px-4 py-8">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+  
+  html {
+    font-family: var(--font-sans);
+  }
+</style>

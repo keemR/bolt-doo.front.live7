@@ -1,0 +1,21 @@
+---
+interface Props {
+  category: string;
+  date?: Date;
+}
+
+const { category, date } = Astro.props;
+const formattedDate = date ? new Date(date).toLocaleDateString() : null;
+---
+
+<div class="flex items-center gap-3">
+  <span class="text-emerald-600 text-sm font-medium">{category}</span>
+  {formattedDate && (
+    <>
+      <span class="text-gray-400">•</span>
+      <time datetime={date.toISOString()} class="text-sm text-gray-500">
+        {formattedDate}
+      </time>
+    </>
+  )}
+</div>

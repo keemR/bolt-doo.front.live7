@@ -1,0 +1,23 @@
+---
+import type { NavigationItem } from '../../types';
+import NavLink from './NavLink.astro';
+
+interface Props {
+  items: NavigationItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav class="hidden xl:flex items-center space-x-6 ml-12">
+  {items.map((item) => (
+    <NavLink
+      href={item.href}
+      class="text-gray-700 hover:text-emerald-500 transition-colors text-sm font-medium whitespace-nowrap group"
+    >
+      <span class="inline-block pb-1 border-b-2 border-transparent group-hover:border-emerald-500">
+        {item.name}
+      </span>
+    </NavLink>
+  ))}
+</nav>
